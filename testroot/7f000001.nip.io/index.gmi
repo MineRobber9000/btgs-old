@@ -1,0 +1,5 @@
+# 7F 00 00 01: The call is coming from inside the house!
+
+If you're seeing this, then your test instance of Big Tiddy Gemini Server is up and running on 7f000001.nip.io. This domain points at localhost, but is a domain, allowing for easy self-signed cert generation.
+
+This server (and this gemroot) are not publically available at this address, as 7f000001.nip.io will only resolve to this server from this server. The only reason this gemroot is available at this address (and included in the repository) is to test file handling in the server.
