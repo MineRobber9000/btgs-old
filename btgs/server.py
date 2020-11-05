@@ -103,11 +103,11 @@ class Server:
 		self.write.write("53 Cowardly refusing to serve proxy request for resource on port {!s}\r\n".format(port).encode("utf-8"))
 	def handle_gemini(self,parseresult):
 		path = self.get_path(parseresult)
+		if not os.path.normpath(path).startswith(self.get_verify_prefix(parseresult)):
+			self.write.write("59 Bad request!\r\n".encode("utf-8"))
+			return
 		if self.FILESYSTEM_BACKED:
 			path = os.path.join(self.PREFIX,self.get_path(parseresult))
-			if not os.path.normpath(path).startswith(self.get_verify_prefix(parseresult)):
-				self.write.write("59 Bad request!\r\n".encode("utf-8"))
-				return
 			if not os.path.exists(path):
 				self.write.write("51 File not found\r\n".encode("utf-8"))
 				return
@@ -135,7 +135,7 @@ class Server:
 	def get_path(self,parseresult):
 		return parseresult.hostname+unquote(parseresult.path)
 	def get_verify_prefix(self,parseresult):
-		return os.path.normpath(os.path.join(self.PREFIX,parseresult.hostname))
+		return os.path.normpath(parseresult.hostname)
 	def handle_directory(self,path):
 		# The base server doesn't do directory listings.
 		# In theory one could build a directory listing using text/gemini, but I don't want to do that.
