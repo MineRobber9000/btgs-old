@@ -17,6 +17,7 @@ def create_context(certfile,keyfile=None,password=None,sni=lambda s, h, c: None)
 	context.options |= ssl.OP_NO_TLSv1_1
 	context.verify_mode = ssl.CERT_OPTIONAL
 	context.load_cert_chain(certfile,keyfile,password)
+	context.sni_callback=sni
 	return context
 
 class Server:
