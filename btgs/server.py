@@ -105,7 +105,6 @@ class Server:
 		path = self.get_path(parseresult)
 		if self.FILESYSTEM_BACKED:
 			path = os.path.join(self.PREFIX,self.get_path(parseresult))
-			print(path,os.path.normpath(path))
 			if not os.path.normpath(path).startswith(self.get_verify_prefix(parseresult)):
 				self.write.write("59 Bad request!\r\n".encode("utf-8"))
 				return
