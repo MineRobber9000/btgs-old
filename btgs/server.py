@@ -1,5 +1,5 @@
 import socket, ssl, os, traceback
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 from btgs.mime import guess_mimetype
 
 HOSTNAMES = dict()
@@ -134,7 +134,7 @@ class Server:
 			self.write.write("20 {}\r\n".format(mime_type).encode("utf-8"))
 			self.write.write(content)
 	def get_path(self,parseresult):
-		return parseresult.hostname+parseresult.path
+		return parseresult.hostname+unquote(parseresult.path)
 	def get_verify_prefix(self,parseresult):
 		return os.path.normpath(os.path.join(self.PREFIX,parseresult.hostname))
 	def handle_directory(self,path):
